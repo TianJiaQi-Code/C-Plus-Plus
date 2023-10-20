@@ -1,0 +1,4 @@
+﻿  test.cpp
+D:\Code\Class110\C-Plus-Plus\test_10_20\test.cpp(28,7): warning C4930: “Date d3(void)”: 未调用原型函数(是否是有意用变量定义的?)
+MSVCRTD.lib(exe_main.obj) : error LNK2019: 无法解析的外部符号 main，函数 "int __cdecl invoke_main(void)" (?invoke_main@@YAHXZ) 中引用了该符号
+D:\Code\Class110\C-Plus-Plus\test_10_20\x64\Debug\test_10_20.exe : fatal error LNK1120: 1 个无法解析的外部命令
