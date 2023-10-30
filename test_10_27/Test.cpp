@@ -1,3 +1,6 @@
+#include <iostream>
+using namespace std;
+
 //#include <stdio.h>
 //#include <stdlib.h>
 //int rand = 10;
@@ -162,44 +165,193 @@
 //// 注意：如果生命与定义位置同时出现，恰巧两个位置提供的值不同，那编译器就无法确定到底该
 //用那个缺省值。
 
-#include<iostream>
+//#include<iostream>
+//using namespace std;
+//// 1、参数类型不同
+//int Add(int left, int right)
+//{
+//	cout << "int Add(int left, int right)" << endl;
+//	return left + right;
+//}
+//double Add(double left, double right)
+//{
+//	cout << "double Add(double left, double right)" << endl;
+//	return left + right;
+//}
+//// 2、参数个数不同
+//void f()
+//{
+//	cout << "f()" << endl;
+//}
+//void f(int a)
+//{
+//	cout << "f(int a)" << endl;
+//}
+//// 3、参数类型顺序不同
+//void f(int a, char b)
+//{
+//	cout << "f(int a,char b)" << endl;
+//}
+//void f(char b, int a)
+//{
+//	cout << "f(char b, int a)" << endl;
+//}
+//int main()
+//{
+//	Add(10, 20);
+//	Add(10.1, 20.2);
+//	f();
+//	f(10);
+//	f(10, 'a');
+//	f('a', 10);
+//	return 0;
+//}
+
+//void TestRef()
+//{
+//	int a = 10;
+//	int& ra = a;//<====定义引用类型
+//	printf("%p\n", &a);
+//	printf("%p\n", &ra);
+//}
+
+//void TestRef()
+//{
+//	int a = 10;
+//	// int& ra; // 该条语句编译时会出错
+//	int& ra = a;
+//	int& rra = a;
+//	printf("%p %p %p\n", &a, &ra, &rra);
+//}
+
+//void TestConstRef()
+//{
+//	const int a = 10;
+//	//int& ra = a; // 该语句编译时会出错，a为常量
+//	const int& ra = a;
+//	// int& b = 10; // 该语句编译时会出错，b为常量
+//	const int& b = 10;
+//	double d = 12.34;
+//	//int& rd = d; // 该语句编译时会出错，类型不同
+//	const int& rd = d;
+//}
+
+//void Swap(int& left, int& right)
+//{
+//	int temp = left;
+//	left = right;
+//	right = temp;
+//}
+
+//int& Count()
+//{
+//	static int n = 0;
+//	n++;
+//	// ...
+//	return n;
+//}
+
+//int& Add(int a, int b)
+//{
+//	int c = a + b;
+//	return c;
+//}
+//int main()
+//{
+//	int& ret = Add(1, 2);
+//	Add(3, 4);
+//	cout << "Add(1, 2) is :" << ret << endl;
+//	return 0;
+//}
+
+//int main()
+//{
+//	//TestRef();
+//	//TestConstRef();
+//	return 0;
+//}
+
+//#include <time.h>
+//struct A { int a[10000]; };
+//void TestFunc1(A a) {}
+//void TestFunc2(A& a) {}
+//void TestRefAndValue()
+//{
+//	A a;
+//	// 以值作为函数参数
+//	size_t begin1 = clock();
+//	for (size_t i = 0; i < 10000; ++i)
+//		TestFunc1(a);
+//	size_t end1 = clock();
+//	// 以引用作为函数参数
+//	size_t begin2 = clock();
+//	for (size_t i = 0; i < 10000; ++i)
+//		TestFunc2(a);
+//	size_t end2 = clock();
+//	// 分别计算两个函数运行结束后的时间
+//	cout << "TestFunc1(A)-time:" << end1 - begin1 << endl;
+//	cout << "TestFunc2(A&)-time:" << end2 - begin2 << endl;
+//}
+
+//#include <time.h>
+//struct A { int a[10000]; };
+//A a;
+//// 值返回
+//A TestFunc1() { return a; }
+//// 引用返回
+//A& TestFunc2() { return a; }
+//void TestReturnByRefOrValue()
+//{
+//	// 以值作为函数的返回值类型
+//	size_t begin1 = clock();
+//	for (size_t i = 0; i < 100000; ++i)
+//		TestFunc1();
+//	size_t end1 = clock();
+//	// 以引用作为函数的返回值类型
+//	size_t begin2 = clock();
+//	for (size_t i = 0; i < 100000; ++i)
+//		TestFunc2();
+//	size_t end2 = clock();
+//	// 计算两个函数运算完成之后的时间
+//	cout << "TestFunc1 time:" << end1 - begin1 << endl;
+//	cout << "TestFunc2 time:" << end2 - begin2 << endl;
+//}
+
+//int main()
+//{
+//	int a = 10;
+//	int& ra = a;
+//	cout << "&a = " << &a << endl;
+//	cout << "&ra = " << &ra << endl;
+//	return 0;
+//}
+
+//int main()
+//{
+//	int a = 10;
+//	int& ra = a;
+//	ra = 20;
+//	int* pa = &a;
+//	*pa = 20;
+//	return 0;
+//}
+
+// F.h
+#include <iostream>
 using namespace std;
-// 1、参数类型不同
-int Add(int left, int right)
+inline void f(int i);
+// F.cpp
+#include "F.h"
+void f(int i)
 {
-	cout << "int Add(int left, int right)" << endl;
-	return left + right;
+	cout << i << endl;
 }
-double Add(double left, double right)
-{
-	cout << "double Add(double left, double right)" << endl;
-	return left + right;
-}
-// 2、参数个数不同
-void f()
-{
-	cout << "f()" << endl;
-}
-void f(int a)
-{
-	cout << "f(int a)" << endl;
-}
-// 3、参数类型顺序不同
-void f(int a, char b)
-{
-	cout << "f(int a,char b)" << endl;
-}
-void f(char b, int a)
-{
-	cout << "f(char b, int a)" << endl;
-}
+// main.cpp
+#include "F.h"
 int main()
 {
-	Add(10, 20);
-	Add(10.1, 20.2);
-	f();
 	f(10);
-	f(10, 'a');
-	f('a', 10);
 	return 0;
 }
+// 链接错误：main.obj : error LNK2019: 无法解析的外部符号 "void __cdecl
+f(int)" (?f@@YAXH@Z)，该符号在函数 _main 中被引用
