@@ -459,8 +459,39 @@ using namespace std;
 //	return 0;
 //}
 
-void TestFor(int array[])
+//void TestFor(int array[])
+//{
+//	for (auto& e : array)
+//		cout << e << endl;
+//}
+
+//void TestPtr()
+//{
+//	int* p1 = NULL;
+//	int* p2 = 0;
+//	// бнбн
+//}
+
+//#ifndef NULL
+//#ifdef __cplusplus
+//#define NULL 0
+//#else
+//#define NULL ((void *)0)
+//#endif
+//#endif
+
+void f(int)
 {
-	for (auto& e : array)
-		cout << e << endl;
+	cout << "f(int)" << endl;
+}
+void f(int*)
+{
+	cout << "f(int*)" << endl;
+}
+int main()
+{
+	f(0);
+	f(NULL);
+	f((int*)NULL);
+	return 0;
 }
