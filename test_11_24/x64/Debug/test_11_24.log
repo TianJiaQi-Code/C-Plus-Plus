@@ -1,0 +1,5 @@
+﻿  test.cpp
+D:\Code\Class110\C-Plus-Plus\test_11_24\test.cpp(250,2): error C2652: “Date”: 非法的复制构造函数: 第一个参数不应是“Date”
+D:\Code\Class110\C-Plus-Plus\test_11_24\test.cpp(240,7): message : 参见“Date”的声明
+D:\Code\Class110\C-Plus-Plus\test_11_24\test.cpp(250,6): error C2333: “Date::Date”: 函数声明中有错误；跳过函数体
+D:\Code\Class110\C-Plus-Plus\test_11_24\test.cpp(264,9): error C2558: class“Date”: 没有可用的复制构造函数或复制构造函数声明为“explicit”
