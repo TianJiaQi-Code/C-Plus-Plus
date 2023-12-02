@@ -353,34 +353,87 @@ using namespace std;
 //	return 0;
 //}
 
+//class Date
+//{
+//public:
+//	Date(int year, int minute, int day)
+//	{
+//		cout << "Date(int,int,int):" << this << endl;
+//	}
+//	Date(const Date& d)
+//	{
+//		cout << "Date(const Date& d):" << this << endl;
+//	}
+//	~Date()
+//	{
+//		cout << "~Date():" << this << endl;
+//	}
+//private:
+//	int _year;
+//	int _month;
+//	int _day;
+//};
+//Date Test(Date d)
+//{
+//	Date temp(d);
+//	return temp;
+//}
+//int main()
+//{
+//	Date d1(2022, 1, 13);
+//	Test(d1);
+//	return 0;
+//}
+
+//// 全局的operator==
+//class Date
+//{
+//public:
+//	Date(int year = 1900, int month = 1, int day = 1)
+//	{
+//		_year = year;
+//		_month = month;
+//		_day = day;
+//	}
+//	//private:
+//	int _year;
+//	int _month;
+//	int _day;
+//};
+//// 这里会发现运算符重载成全局的就需要成员变量是公有的，那么问题来了，封装性如何保证？
+//// 这里其实可以用我们后面学习的友元解决，或者干脆重载成成员函数。
+//bool operator==(const Date& d1, const Date& d2)
+//{
+//	return d1._year == d2._year
+//		&& d1._month == d2._month
+//		&& d1._day == d2._day;
+//}
+//void Test()
+//{
+//	Date d1(2018, 9, 26);
+//	Date d2(2018, 9, 27);
+//	cout << (d1 == d2) << endl;
+//}
+
 class Date
 {
 public:
-	Date(int year, int minute, int day)
+	Date(int year = 1900, int month = 1, int day = 1)
 	{
-		cout << "Date(int,int,int):" << this << endl;
+		_year = year;
+		_month = month;
+		_day = day;
 	}
-	Date(const Date& d)
+	// bool operator==(Date* this, const Date& d2)
+	// 这里需要注意的是，左操作数是this，指向调用函数的对象
+	bool operator==(const Date & d2)
 	{
-		cout << "Date(const Date& d):" << this << endl;
-	}
-	~Date()
-	{
-		cout << "~Date():" << this << endl;
+		return _year == d2._year
+			&& _month == d2._month
+			&& _day == d2._day;
 	}
 private:
 	int _year;
 	int _month;
 	int _day;
 };
-Date Test(Date d)
-{
-	Date temp(d);
-	return temp;
-}
-int main()
-{
-	Date d1(2022, 1, 13);
-	Test(d1);
-	return 0;
-}
