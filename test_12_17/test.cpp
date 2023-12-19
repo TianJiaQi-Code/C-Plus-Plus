@@ -105,13 +105,28 @@ using namespace std;
 //	return 0;
 //}
 
-void MemoryLeaks()
+//void MemoryLeaks()
+//{
+//	// 1.内存申请了忘记释放
+//	int* p1 = (int*)malloc(sizeof(int));
+//	int* p2 = new int;
+//	// 2.异常安全问题
+//	int* p3 = new int[10];
+//	Func(); // 这里Func函数抛异常导致 delete[] p3未执行，p3没被释放.
+//	delete[] p3;
+//}
+
+int main()
 {
-	// 1.内存申请了忘记释放
-	int* p1 = (int*)malloc(sizeof(int));
-	int* p2 = new int;
-	// 2.异常安全问题
-	int* p3 = new int[10];
-	Func(); // 这里Func函数抛异常导致 delete[] p3未执行，p3没被释放.
-	delete[] p3;
+	int* p = new int[10];
+	// 将该函数放在main函数之后，每次程序退出的时候就会检测是否存在内存泄漏
+	_CrtDumpMemoryLeaks();
+	return 0;
 }
+////////////////////////////////////////////////////////
+// 程序退出后，在输出窗口中可以检测到泄漏了多少字节，但是没有具体的位置
+//Detected memory leaks!
+//Dumping objects ->
+//{79} normal block at 0x00EC5FB8, 40 bytes long.
+//Data: < > CD CD CD CD CD CD CD CD CD CD CD CD CD CD CD CD
+//Object dump complete.
