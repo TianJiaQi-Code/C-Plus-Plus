@@ -107,9 +107,56 @@ void Teststring4()
 	cout << endl;
 }
 
+//////////////////////////////////////////////////////////////
+// 测试string：
+// 1. 插入(拼接)方式：push_back  append  operator+= 
+// 2. 正向和反向查找：find() + rfind()
+// 3. 截取子串：substr()
+// 4. 删除：erase
+void Teststring5()
+{
+	string str;
+	str.push_back(' ');				// 在str后插入空格
+	str.append("hello");			// 在str后追加一个字符串"hello"
+	str += 's';						// 在str后追加一个字符's'   
+	str += "tring";					// 在str后追加一个字符串"tring"
+	cout << str << endl;
+	cout << str.c_str() << endl;	// 以C语言的方式打印字符串
+	cout << endl;
+
+	// 获取file的后缀
+	string file("string.cpp");
+	size_t pos = file.rfind('.');
+	string suffix(file.substr(pos, file.size() - pos));
+	cout << suffix << endl;
+	cout << endl;
+
+	// npos是string里面的一个静态成员变量
+	// static const size_t npos = -1;
+
+	// 取出url中的域名
+	string url("http://www.cplusplus.com/reference/string/string/find/");
+	cout << url << endl;
+	size_t start = url.find("://");
+	if (start == string::npos)
+	{
+		cout << "invalid url" << endl;
+		return;
+	}
+	start += 3;
+	size_t finish = url.find('/', start);
+	string address = url.substr(start, finish - start);
+	cout << address << endl;
+
+	// 删除url的协议前缀
+	pos = url.find("://");
+	url.erase(0, pos + 3);
+	cout << url << endl;
+}
+
 int main()
 {
-	Teststring4();
+	Teststring5();
 	return 0;
 }
 
@@ -122,3 +169,17 @@ int main()
 //	string s2("hello bit"); // 用C格式字符串构造string类对象s2
 //	string s3(s2);			// 拷贝构造s3
 //}
+
+union _Bxty
+{ // storage for small buffer or pointer to larger one
+	value_type _Buf[_BUF_SIZE];
+	pointer _Ptr;
+	char _Alias[_BUF_SIZE]; // to permit aliasing
+} _Bx;
+
+struct _Rep_base
+{
+	size_type _M_length;
+	size_type _M_capacity;
+	_Atomic_word _M_refcount;
+};
