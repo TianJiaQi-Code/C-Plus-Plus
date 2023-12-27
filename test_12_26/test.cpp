@@ -29,6 +29,29 @@ bool isPalindrome(string s)
     return true;
 }
 
+class Solution
+{
+public:
+    string reverseWords(string s)
+    {
+        int size = s.size();
+        int begin = 0;
+        int end = 0;
+        for (int i = 0; i < size; i++)
+        {
+            if (s[i] == ' ')
+            {
+                end = i;
+                reverse(s.begin() + begin, s.begin() + end);
+                begin = end + 1;
+            }
+        }
+        reverse(s.begin() + begin, s.end());
+
+        return s;
+    }
+};
+
 int main()
 {
     string s = "abb";
