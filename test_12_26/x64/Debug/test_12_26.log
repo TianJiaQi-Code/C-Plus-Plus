@@ -1,3 +1,7 @@
 ﻿  test.cpp
-D:\Code\Class110\C-Plus-Plus\test_12_26\test.cpp(21,15): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
-  test_12_26.vcxproj -> D:\Code\Class110\C-Plus-Plus\test_12_26\x64\Debug\test_12_26.exe
+D:\Code\C++\C-Plus-Plus\test_12_26\test.cpp(21,15): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
+D:\Code\C++\C-Plus-Plus\test_12_26\test.cpp(37,18): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
+D:\Code\C++\C-Plus-Plus\test_12_26\test.cpp(57,15): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
+D:\Code\C++\C-Plus-Plus\test_12_26\test.cpp(58,15): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
+D:\Code\C++\C-Plus-Plus\test_12_26\test.cpp(111,13): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
+  test_12_26.vcxproj -> D:\Code\C++\C-Plus-Plus\test_12_26\x64\Debug\test_12_26.exe

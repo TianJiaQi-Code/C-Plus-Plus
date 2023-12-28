@@ -52,12 +52,70 @@ public:
     }
 };
 
+string multiply(string num1, string num2)
+{
+    int size1 = num1.size();
+    int size2 = num2.size();
+    int arr[500] = { 0 };
+    int k = 0;  // 用来维护数组下标
+    string ret = "";
+
+    // 把未进位的乘积存入数组
+    for (int j = size2 - 1; j >= 0; j--)
+    {
+        int tmp = k;
+        for (int i = size1 - 1; i >= j; i--)
+        {
+            arr[k] += (num2[j] - '0') * (num1[i] - '0');
+            k++;
+        }
+        k = tmp + 1;
+    }
+    // 开始进位
+    for (int i = 0; i < size1 + size2 - 1; i++)
+    {
+        arr[i + 1] += arr[i] / 10;
+        arr[i] %= 10;
+    }
+    // 把数组中（倒序）的数字转为字符串
+    for (int i = size1 + size2 - 1; i >= 0; i--)
+    {
+        if (arr[i] == 0)
+            continue;
+        else
+            ret.push_back(arr[i] + '0');
+    }
+
+    return ret;
+}
+
+//int main()
+//{
+//    string ret = multiply("123", "456");
+//    cout << ret << endl;
+//
+//    //string s = "abb";
+//    //if (isPalindrome(s))
+//    //    printf("true");
+//    //else
+//    //    printf("false");
+//    return 0;
+//}
+
 int main()
 {
-    string s = "abb";
-    if (isPalindrome(s))
-        printf("true");
-    else
-        printf("false");
-    return 0;
+    string str = "";
+    cin >> str;
+
+    int begin = 0;
+    int end = str.size();
+    for (int i = 0; i < end; i++)
+    {
+        if (str[i] == ' ')
+        {
+            begin = i + 1;
+        }
+    }
+
+    cout << end - begin;
 }
