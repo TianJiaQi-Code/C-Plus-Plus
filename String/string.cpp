@@ -123,7 +123,7 @@ namespace tjq
 			reserve(_size + len);
 		}
 
-		int end = _size;
+		int end = (int)_size;
 		while (end >= (int)pos)
 		{
 			_str[end + len] = _str[end];
