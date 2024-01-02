@@ -100,3 +100,64 @@ int main()
 	//tjq::TestString5();
 	return 0;
 }
+
+
+
+//#define _CRT_SECURE_NO_WARNINGS 1
+//
+//#include <iostream>
+//#include <assert.h>
+////using namespace std;
+//
+//class string
+//{
+//public:
+//	string(const char* str = "")
+//	{
+//		if (nullptr == str)
+//		{
+//			assert(false);
+//			return;
+//		}
+//		_str = new char[strlen(str) + 1];
+//		strcpy(_str, str);
+//	}
+//
+//	string(const string& s)
+//		: _str(new char[strlen(s._str) + 1])
+//	{
+//		strcpy(_str, s._str);
+//	}
+//
+//	string& operator=(const string& s)
+//	{
+//		if (this != &s)
+//		{
+//			char* pStr = new char[strlen(s._str) + 1];
+//			strcpy(pStr, s._str);
+//			delete[] _str;
+//			_str = pStr;
+//		}
+//		return *this;
+//	}
+//
+//	~string()
+//	{
+//		if (_str)
+//		{
+//			delete[] _str;
+//			_str = nullptr;
+//		}
+//	}
+//
+//private:
+//	char* _str = nullptr;
+//};
+//
+//int main()
+//{
+//	string s1("hello string");
+//	string s2(s1);
+//	string s3 = s2;
+//	return 0;
+//}
