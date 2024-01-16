@@ -14,6 +14,7 @@ namespace tjq
 		vector()
 		{}
 
+		// v2(v1)
 		vector(const vector<T>& v)
 		{
 			reserve(v.capacity());
@@ -22,6 +23,8 @@ namespace tjq
 				push_back(e);
 			}
 		}
+
+		template <class >
 
 		void swap(vector<T>& v)
 		{
