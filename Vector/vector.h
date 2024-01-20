@@ -1,6 +1,7 @@
 #pragma once
 #include <assert.h>
 
+
 namespace tjq
 {
 	template<class T>
@@ -24,7 +25,25 @@ namespace tjq
 			}
 		}
 
-		template <class >
+		template <class InputIterator>
+		vector(InputIterator first, InputIterator last)
+		{
+			while (first != last)
+			{
+				push_back(*first);
+				++first;
+			}
+		}
+
+		vector(size_t n, const T& val = T())
+		{
+			resize(n, val);
+		}
+
+		vector(int n, const T& val = T())
+		{
+			resize(n, val);
+		}
 
 		void swap(vector<T>& v)
 		{
@@ -39,7 +58,7 @@ namespace tjq
 			return *this;
 		}
 
-		_vector()
+		~vector()
 		{
 			if (_start)
 			{
@@ -76,7 +95,11 @@ namespace tjq
 				T* tmp = new T[n];
 				if (_start)
 				{
-					memcpy(tmp, _start, old * sizeof(T));
+					//memcpy(tmp, _start, old * sizeof(T));
+					for (size_t i = 0; i < old; i++)
+					{
+						tmp[i] = _start[i];
+					}
 					delete[] _start;
 				}
 
@@ -86,7 +109,22 @@ namespace tjq
 			}
 		}
 
-		void resize(size_t n, T val = T());
+		void resize(size_t n, T val = T())
+		{
+			if (n > size())
+			{
+				reserve(n);
+				while (_finish < _start + n)
+				{
+					*_finish = val;
+					++_finish;
+				}
+			}
+			else
+			{
+				_finish = _start + n;
+			}
+		}
 
 		void push_back(const T& x)
 		{
@@ -106,7 +144,7 @@ namespace tjq
 			--_finish;
 		}
 
-		void insert(iterator pos, const T& x)
+		iterator insert(iterator pos, const T& x)
 		{
 			assert(pos >= _start && pos <= _finish);
 
@@ -116,13 +154,34 @@ namespace tjq
 				reserve(capacity() == 0 ? 4 : capacity() * 2);
 				pos = _start + len;
 			}
-			memmove(pos + 1, pos, sizeof(T) * (_finish - pos));
+			//memmove(pos + 1, pos, sizeof(T) * (_finish - pos));
+			iterator end = _finish - 1;
+			while (end >= pos)
+			{
+				*(end + 1) = *end;
+				--end;
+			}
 			*pos = x;
-
 			++_finish;
+
+			return pos;
 		}
 
-		void erase(iterator pos);
+		iterator erase(iterator pos)
+		{
+			assert(pos >= _start);
+			assert(pos < _finish);
+
+			iterator it = pos + 1;
+			while (it < _finish)
+			{
+				*(it - 1) = *it;
+				++it;
+			}
+			_finish--;
+
+			return pos;
+		}
 
 		size_t size() const
 		{
@@ -135,6 +194,12 @@ namespace tjq
 		}
 
 		T& operator[](size_t pos)
+		{
+			assert(pos < size());
+			return _start[pos];
+		}
+
+		const T& operator[](size_t pos) const
 		{
 			assert(pos < size());
 			return _start[pos];
