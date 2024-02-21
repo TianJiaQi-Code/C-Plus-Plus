@@ -115,33 +115,262 @@ using namespace std;
 //	s1.Print();
 //};
 
-// B中的fun和A中的fun不是构成重载，因为不是在同一作用域
-// B中的fun和A中的fun构成隐藏，成员函数满足函数名相同就构成隐藏。
+//// B中的fun和A中的fun不是构成重载，因为不是在同一作用域
+//// B中的fun和A中的fun构成隐藏，成员函数满足函数名相同就构成隐藏。
+//class A
+//{
+//public:
+//	void fun()
+//	{
+//		cout << "func()" << endl;
+//	}
+//};
+//class B : public A
+//{
+//public:
+//	void fun(int i)
+//	{
+//		A::fun();
+//		cout << "func(int i)->" << i << endl;
+//	}
+//};
+//void Test()
+//{
+//	B b;
+//	b.fun(10);
+//};
+
+//class Person
+//{
+//public:
+//	Person(const char* name = "peter")
+//		: _name(name)
+//	{
+//		cout << "Person()" << endl;
+//	}
+//	Person(const Person& p)
+//		: _name(p._name)
+//	{
+//		cout << "Person(const Person& p)" << endl;
+//	}
+//	Person& operator=(const Person& p)
+//	{
+//		cout << "Person operator=(const Person& p)" << endl;
+//		if (this != &p)
+//			_name = p._name;
+//		return *this;
+//	}
+//	~Person()
+//	{
+//		cout << "~Person()" << endl;
+//	}
+//protected:
+//	string _name; // 姓名
+//};
+//class Student : public Person
+//{
+//public:
+//	Student(const char* name, int num)
+//		: Person(name)
+//		, _num(num)
+//	{
+//		cout << "Student()" << endl;
+//	}
+//	Student(const Student& s)
+//		: Person(s)
+//		, _num(s._num)
+//	{
+//		cout << "Student(const Student& s)" << endl;
+//	}
+//	Student& operator = (const Student& s)
+//	{
+//		cout << "Student& operator= (const Student& s)" << endl;
+//		if (this != &s)
+//		{
+//			Person::operator =(s);
+//			_num = s._num;
+//		}
+//		return *this;
+//	}
+//	~Student()
+//	{
+//		cout << "~Student()" << endl;
+//	}
+//protected:
+//	int _num; //学号
+//};
+//
+//void Test()
+//{
+//	Student s1("jack", 18);
+//	cout << endl;
+//
+//	Student s2(s1);
+//	cout << endl;
+//
+//	Student s3("rose", 17);
+//	cout << endl;
+//
+//	s1 = s3;
+//	cout << endl;
+//}
+//
+//int main()
+//{
+//	Test();
+//	return 0;
+//}
+
+//class Student;
+//class Person
+//{
+//public:
+//	friend void Display(const Person& p, const Student& s);
+//protected:
+//	string _name; // 姓名
+//};
+//class Student : public Person
+//{
+//protected:
+//	int _stuNum; // 学号
+//};
+//void Display(const Person& p, const Student& s)
+//{
+//	cout << p._name << endl;
+//	cout << s._stuNum << endl;
+//}
+//int main()
+//{
+//	Person p;
+//	Student s;
+//	Display(p, s);
+//
+//	return 0;
+//}
+
+//class Person
+//{
+//public:
+//	Person() { ++_count; }
+//protected:
+//	string _name; // 姓名
+//public:
+//	static int _count; // 统计人的个数。
+//};
+//int Person::_count = 0;
+//class Student : public Person
+//{
+//protected:
+//	int _stuNum; // 学号
+//};
+//class Graduate : public Student
+//{
+//protected:
+//	string _seminarCourse; // 研究科目
+//};
+//
+//void TestPerson()
+//{
+//	Student s1;
+//	Student s2;
+//	Student s3;
+//	Graduate s4;
+//	cout << "人数 :" << Person::_count << endl;
+//	Student::_count = 0;
+//	cout << "人数 :" << Person::_count << endl;
+//}
+//
+//int main()
+//{
+//	TestPerson();
+//	return 0;
+//}
+
+//class Person
+//{
+//public:
+//	string _name; // 姓名
+//};
+//class Student : public Person
+//{
+//protected:
+//	int _num; //学号
+//};
+//class Teacher : public Person
+//{
+//protected:
+//	int _id; // 职工编号
+//};
+//class Assistant : public Student, public Teacher
+//{
+//protected:
+//	string _majorCourse; // 主修课程
+//};
+//void Test()
+//{
+//	// 这样会有二义性无法明确知道访问的是哪一个
+//	Assistant a;
+//	a._name = "peter";
+//	// 需要显示指定访问哪个父类的成员可以解决二义性问题，但是数据冗余问题无法解决
+//	a.Student::_name = "xxx";
+//	a.Teacher::_name = "yyy";
+//}
+
+//class Person
+//{
+//public:
+//	string _name; // 姓名
+//};
+//class Student : virtual public Person
+//{
+//protected:
+//	int _num; //学号
+//};
+//class Teacher : virtual public Person
+//{
+//protected:
+//	int _id; // 职工编号
+//};
+//class Assistant : public Student, public Teacher
+//{
+//protected:
+//	string _majorCourse; // 主修课程
+//};
+//void Test()
+//{
+//	Assistant a;
+//	a._name = "peter";
+//}
+
 class A
 {
 public:
-	void fun()
-	{
-		cout << "func()" << endl;
-	}
+	int _a;
 };
-class B : public A
+// class B : public A
+class B : virtual public A
 {
 public:
-	void fun(int i)
-	{
-		A::fun();
-		cout << "func(int i)->" << i << endl;
-	}
+	int _b;
 };
-void Test()
+// class C : public A
+class C : virtual public A
 {
-	B b;
-	b.fun(10);
+public:
+	int _c;
 };
-
+class D : public B, public C
+{
+public:
+	int _d;
+};
 int main()
 {
-	Test();
+	D d;
+	d.B::_a = 1;
+	d.C::_a = 2;
+	d._b = 3;
+	d._c = 4;
+	d._d = 5;
 	return 0;
 }
