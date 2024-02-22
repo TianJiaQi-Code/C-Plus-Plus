@@ -342,35 +342,62 @@ using namespace std;
 //	a._name = "peter";
 //}
 
-class A
-{
-public:
-	int _a;
+//class A
+//{
+//public:
+//	int _a;
+//};
+//// class B : public A
+//class B : virtual public A
+//{
+//public:
+//	int _b;
+//};
+//// class C : public A
+//class C : virtual public A
+//{
+//public:
+//	int _c;
+//};
+//class D : public B, public C
+//{
+//public:
+//	int _d;
+//};
+//int main()
+//{
+//	D d;
+//	d.B::_a = 1;
+//	d.C::_a = 2;
+//	d._b = 3;
+//	d._c = 4;
+//	d._d = 5;
+//	return 0;
+//}
+
+// Car和BMW Car和Benz构成is-a的关系
+class Car {
+protected:
+	string _colour = "白色"; // 颜色
+	string _num = "XXXXXX"; // 车牌号
 };
-// class B : public A
-class B : virtual public A
-{
+class BMW : public Car {
 public:
-	int _b;
+	void Drive() { cout << "好开-操控" << endl; }
 };
-// class C : public A
-class C : virtual public A
-{
+class Benz : public Car {
 public:
-	int _c;
+	void Drive() { cout << "好坐-舒适" << endl; }
 };
-class D : public B, public C
-{
-public:
-	int _d;
+// Tire和Car构成has-a的关系
+class Tire {
+protected:
+	string _brand = "Michelin"; // 品牌
+	size_t _size = 17; // 尺寸
 };
-int main()
-{
-	D d;
-	d.B::_a = 1;
-	d.C::_a = 2;
-	d._b = 3;
-	d._c = 4;
-	d._d = 5;
-	return 0;
-}
+class Car {
+protected:
+	string _colour = "白色"; // 颜色
+	string _num = "XXXXXX"; // 车牌号
+	Tire _t; // 轮胎
+};
