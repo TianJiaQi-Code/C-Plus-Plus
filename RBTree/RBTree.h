@@ -160,6 +160,8 @@ public:
 
 	void RotateL(Node* parent)
 	{
+		++rotateSize;
+
 		Node* subR = parent->_right;
 		Node* subRL = subR->_left;
 
@@ -192,6 +194,8 @@ public:
 
 	void RotateR(Node* parent)
 	{
+		++rotateSize;
+
 		Node* subL = parent->_left;
 		Node* subLR = subL->_right;
 
@@ -259,6 +263,62 @@ public:
 		return Check(_root);
 	}
 
+	size_t _Size(Node* root)
+	{
+		if (root == NULL)
+			return 0;
+
+		return _Size(root->_left) + _Size(root->_right) + 1;
+	}
+
+	size_t Size()
+	{
+		return _Size(_root);
+	}
+
+	Node* Find(const K& key)
+	{
+		Node* cur = _root;
+		while (cur)
+		{
+			if (cur->_kv.first < key)
+			{
+				cur = cur->_right;
+			}
+			else if (cur->_kv.first > key)
+			{
+				cur = cur->_left;
+			}
+			else
+			{
+				return cur;
+			}
+		}
+		return NULL;
+	}
+
+	int _Height(Node* root)
+	{
+		if (root == nullptr)
+			return 0;
+
+		int leftHeight = _Height(root->_left);
+		int rightHeight = _Height(root->_right);
+
+		return leftHeight > rightHeight ? leftHeight + 1 : rightHeight + 1;
+	}
+
+	int Height()
+	{
+		return _Height(_root);
+	}
+
+	int GetRotateSize()
+	{
+		return rotateSize;
+	}
+
 private:
 	Node* _root = nullptr;
+	int rotateSize = 0;
 };
