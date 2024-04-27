@@ -3,6 +3,8 @@
 #include <iostream>
 #include <assert.h>
 #include <list>
+#include <vector>
+#include <algorithm>
 using namespace std;
 
 namespace tjq
@@ -386,4 +388,173 @@ private:
 //	Person s2 = s1;
 //	Person s3 = std::move(s1);
 //	return 0;
+//}
+
+//// Args是一个模板参数包，args是一个函数形参参数包
+//// 声明一个参数包Args...args，这个参数包中可以包含0到任意个模板参数。
+//template <class ...Args>
+//void ShowList(Args... args)
+//{}
+
+//// 递归终止函数
+//template <class T>
+//void ShowList(const T& t)
+//{
+//	cout << t << endl;
+//}
+//// 展开函数
+//template <class T, class ...Args>
+//void ShowList(T value, Args... args)
+//{
+//	cout << value << " ";
+//	ShowList(args...);
+//}
+//int main()
+//{
+//	ShowList(1);
+//	ShowList(1, 'A');
+//	ShowList(1, 'A', std::string("sort"));
+//	return 0;
+//}
+
+//template <class T>
+//void PrintArg(T t)
+//{
+//	cout << t << " ";
+//}
+////展开函数
+//template <class ...Args>
+//void ShowList(Args... args)
+//{
+//	int arr[] = { (PrintArg(args), 0)... };
+//	cout << endl;
+//}
+//int main()
+//{
+//	ShowList(1);
+//	ShowList(1, 'A');
+//	ShowList(1, 'A', std::string("sort"));
+//	return 0;
+//}
+
+//template <class... Args>
+//void emplace_back(Args&&... args);
+
+//int main()
+//{
+//	std::list< std::pair<int, char> > mylist;
+//	// emplace_back支持可变参数，拿到构建pair对象的参数后自己去创建对象
+//	// 那么在这里我们可以看到除了用法上，和push_back没什么太大的区别
+//	mylist.emplace_back(10, 'a');
+//	mylist.emplace_back(20, 'b');
+//	mylist.emplace_back(make_pair(30, 'c'));
+//	mylist.push_back(make_pair(40, 'd'));
+//	mylist.push_back({ 50, 'e' });
+//	for (auto e : mylist)
+//		cout << e.first << ":" << e.second << endl;
+//	return 0;
+//}
+
+//int main()
+//{
+//	// 下面我们试一下带有拷贝构造和移动构造的tjq::string，再试试呢
+//	// 我们会发现其实差别也不大，emplace_back是直接构造了，push_back
+//	// 是先构造，再移动构造，其实也还好。
+//	std::list< std::pair<int, tjq::string> > mylist;
+//	mylist.emplace_back(10, "sort");
+//	mylist.emplace_back(make_pair(20, "sort"));
+//	mylist.push_back(make_pair(30, "sort"));
+//	mylist.push_back({ 40, "sort" });
+//
+//	return 0;
+//}
+
+//#include <algorithm>
+//#include <functional>
+//int main()
+//{
+//	int array[] = { 4,1,8,5,3,7,0,9,2,6 };
+//	// 默认按照小于比较，排出来结果是升序
+//	std::sort(array, array + sizeof(array) / sizeof(array[0]));
+//	// 如果需要降序，需要改变元素的比较规则
+//	std::sort(array, array + sizeof(array) / sizeof(array[0]), greater<int>());
+//	return 0;
+//}
+
+struct Goods
+{
+	string _name; // 名字
+	double _price; // 价格
+	int _evaluate; // 评价
+	Goods(const char* str, double price, int evaluate)
+		:_name(str)
+		, _price(price)
+		, _evaluate(evaluate)
+	{}
+};
+struct ComparePriceLess
+{
+	bool operator()(const Goods& gl, const Goods& gr)
+	{
+		return gl._price < gr._price;
+	}
+};
+struct ComparePriceGreater
+{
+	bool operator()(const Goods& gl, const Goods& gr)
+	{
+		return gl._price > gr._price;
+	}
+};
+
+int main()
+{
+	// 最简单的lambda表达式, 该lambda表达式没有任何意义
+	[] {};
+
+	// 省略参数列表和返回值类型，返回值类型由编译器推导为int
+	int a = 3, b = 4;
+	[=] { return a + 3; };
+
+	// 省略了返回值类型，无返回值类型
+	auto fun1 = [&](int c) { b = a + c; };
+	fun1(10);
+	cout << a << " " << b << endl;
+
+	// 各部分都很完善的lambda函数
+	auto fun2 = [=, &b](int c) ->int { return b += a + c; };
+	cout << fun2(10) << endl;
+
+	// 复制捕捉x
+	int x = 10;
+	auto add_x = [x](int a) mutable { x *= 2; return a + x; };
+	cout << add_x(10) << endl;
+
+	return 0;
+}
+
+//int main()
+//{
+//	vector<Goods> v = { { "苹果", 2.1, 5 }, { "香蕉", 3, 4 },
+//		{ "橙子", 2.2, 3 }, { "菠萝", 1.5, 4 } };
+//
+//	sort(v.begin(), v.end(), [](const Goods& g1, const Goods& g2) {
+//		return g1._price < g2._price; });
+//	sort(v.begin(), v.end(), [](const Goods& g1, const Goods& g2) {
+//		return g1._price > g2._price; });
+//	sort(v.begin(), v.end(), [](const Goods& g1, const Goods& g2) {
+//		return g1._evaluate < g2._evaluate; });
+//	sort(v.begin(), v.end(), [](const Goods& g1, const Goods& g2) {
+//		return g1._evaluate > g2._evaluate; });
+//
+//	return 0;
+//}
+
+
+//int main()
+//{
+//	vector<Goods> v = { { "苹果", 2.1, 5 }, { "香蕉", 3, 4 },
+//		{ "橙子", 2.2, 3 }, { "菠萝", 1.5, 4 } };
+//	sort(v.begin(), v.end(), ComparePriceLess());
+//	sort(v.begin(), v.end(), ComparePriceGreater());
 //}
