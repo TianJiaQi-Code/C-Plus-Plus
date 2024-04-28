@@ -507,31 +507,74 @@ struct ComparePriceGreater
 	}
 };
 
+void (*PF)();
+
 int main()
 {
-	// 最简单的lambda表达式, 该lambda表达式没有任何意义
-	[] {};
-
-	// 省略参数列表和返回值类型，返回值类型由编译器推导为int
-	int a = 3, b = 4;
-	[=] { return a + 3; };
-
-	// 省略了返回值类型，无返回值类型
-	auto fun1 = [&](int c) { b = a + c; };
-	fun1(10);
-	cout << a << " " << b << endl;
-
-	// 各部分都很完善的lambda函数
-	auto fun2 = [=, &b](int c) ->int { return b += a + c; };
-	cout << fun2(10) << endl;
-
-	// 复制捕捉x
-	int x = 10;
-	auto add_x = [x](int a) mutable { x *= 2; return a + x; };
-	cout << add_x(10) << endl;
-
+	auto f1 = [] {cout << "hello world" << endl; };
+	auto f2 = [] {cout << "hello world" << endl; };
+	// 此处先不解释原因，等lambda表达式底层实现原理看完后，大家就清楚了
+	//f1 = f2; // 编译失败--->提示找不到operator=()
+	// 允许使用一个lambda表达式拷贝构造一个新的副本
+	auto f3(f2);
+	f3();
+	// 可以将lambda表达式赋值给相同类型的函数指针
+	PF = f2;
+	PF();
 	return 0;
 }
+
+//class Rate
+//{
+//public:
+//	Rate(double rate) : _rate(rate)
+//	{}
+//	double operator()(double money, int year)
+//	{
+//		return money * _rate * year;
+//	}
+//private:
+//	double _rate;
+//};
+//
+//int main()
+//{
+//	// 函数对象
+//	double rate = 0.49;
+//	Rate r1(rate);
+//	r1(10000, 2);
+//	// lamber
+//	auto r2 = [=](double monty, int year)->double {return monty * rate * year;
+//	};
+//	r2(10000, 2);
+//	return 0;
+//}
+
+//int main()
+//{
+//	// 最简单的lambda表达式, 该lambda表达式没有任何意义
+//	[] {};
+//
+//	// 省略参数列表和返回值类型，返回值类型由编译器推导为int
+//	int a = 3, b = 4;
+//	[=] { return a + 3; };
+//
+//	// 省略了返回值类型，无返回值类型
+//	auto fun1 = [&](int c) { b = a + c; };
+//	fun1(10);
+//	cout << a << " " << b << endl;
+//
+//	// 各部分都很完善的lambda函数
+//	auto fun2 = [=, &b](int c) ->int { return b += a + c; };
+//	cout << fun2(10) << endl;
+//
+//	// 复制捕捉x
+//	int x = 10;
+//	auto add_x = [x](int a) mutable { x *= 2; return a + x; };
+//	cout << add_x(10) << endl;
+//
+//	return 0;
+//}
 
 //int main()
 //{
