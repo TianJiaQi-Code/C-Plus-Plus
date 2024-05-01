@@ -648,49 +648,129 @@ struct ComparePriceGreater
 //Args…：被调用函数的形参
 
 // 使用方法如下：
+//#include <functional>
+//int f(int a, int b)
+//{
+//	return a + b;
+//}
+//struct Functor
+//{
+//public:
+//	int operator() (int a, int b)
+//	{
+//		return a + b;
+//	}
+//};
+//class Plus
+//{
+//public:
+//	static int plusi(int a, int b)
+//	{
+//		return a + b;
+//	}
+//	double plusd(double a, double b)
+//	{
+//		return a + b;
+//	}
+//};
+//int main()
+//{
+//	// 函数名(函数指针)
+//	std::function<int(int, int)> func1 = f;
+//	cout << func1(1, 2) << endl;
+//
+//	// 函数对象
+//	std::function<int(int, int)> func2 = Functor();
+//	cout << func2(1, 2) << endl;
+//
+//	// lambda表达式
+//	std::function<int(int, int)> func3 = [](const int a, const int b) { return a + b; };
+//	cout << func3(1, 2) << endl;
+//
+//	// 类的成员函数
+//	std::function<int(int, int)> func4 = &Plus::plusi;
+//	cout << func4(1, 2) << endl;
+//	std::function<double(Plus, double, double)> func5 = &Plus::plusd;
+//	cout << func5(Plus(), 1.1, 2.2) << endl;
+//	return 0;
+//}
+
+//#include <functional>
+//template<class F, class T>
+//T useF(F f, T x)
+//{
+//	static int count = 0;
+//	cout << "count:" << ++count << endl;
+//	cout << "count:" << &count << endl;
+//	return f(x);
+//}
+//double f(double i)
+//{
+//	return i / 2;
+//}
+//struct Functor
+//{
+//	double operator()(double d)
+//	{
+//		return d / 3;
+//	}
+//};
+//
+//int main()
+//{
+//	// 函数名
+//	std::function<double(double)> func1 = f;
+//	cout << useF(func1, 11.11) << endl;
+//	// 函数对象
+//	std::function<double(double)> func2 = Functor();
+//	cout << useF(func2, 11.11) << endl;
+//	// lambda表达式
+//	std::function<double(double)> func3 = [](double d)->double { return d /
+//		4; };
+//	cout << useF(func3, 11.11) << endl;
+//	return 0;
+//}
+
+//// 原型如下：
+//template <class Fn, class... Args>
+///* unspecified */ bind(Fn&& fn, Args&&... args);
+//// with return type (2)
+//template <class Ret, class Fn, class... Args>
+///* unspecified */ bind(Fn&& fn, Args&&... args);
+
+// 使用举例
 #include <functional>
-int f(int a, int b)
+int Plus(int a, int b)
 {
 	return a + b;
 }
-struct Functor
+class Sub
 {
 public:
-	int operator() (int a, int b)
+	int sub(int a, int b)
 	{
-		return a + b;
-	}
-};
-class Plus
-{
-public:
-	static int plusi(int a, int b)
-	{
-		return a + b;
-	}
-	double plusd(double a, double b)
-	{
-		return a + b;
+		return a - b;
 	}
 };
 int main()
 {
-	// 函数名(函数指针)
-	std::function<int(int, int)> func1 = f;
+	//表示绑定函数plus 参数分别由调用 func1 的第一，二个参数指定
+	std::function<int(int, int)> func1 = std::bind(Plus, placeholders::_1,
+		placeholders::_2);
+	//auto func1 = std::bind(Plus, placeholders::_1, placeholders::_2);
+	//func2的类型为 function<void(int, int, int)> 与func1类型一样
+	//表示绑定函数 plus 的第一，二为： 1， 2
+	auto func2 = std::bind(Plus, 1, 2);
 	cout << func1(1, 2) << endl;
-
-	// 函数对象
-	std::function<int(int, int)> func2 = Functor();
-	cout << func2(1, 2) << endl;
-
-	// lambda表达式
-	std::function<int(int, int)> func3 = [](const int a, const int b) { return a + b; };
+	cout << func2() << endl;
+	Sub s;
+	// 绑定成员函数
+	std::function<int(int, int)> func3 = std::bind(&Sub::sub, s,
+		placeholders::_1, placeholders::_2);
+	// 参数调换顺序
+	std::function<int(int, int)> func4 = std::bind(&Sub::sub, s,
+		placeholders::_2, placeholders::_1);
 	cout << func3(1, 2) << endl;
-
-	// 类的成员函数
-	std::function<int(int, int)> func4 = &Plus::plusi;
 	cout << func4(1, 2) << endl;
-	std::function<double(Plus, double, double)> func5 = &Plus::plusd;
-	cout << func5(Plus(), 1.1, 2.2) << endl;
 	return 0;
 }
