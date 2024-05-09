@@ -1,0 +1,86 @@
+#include <iostream>
+using namespace std;
+
+// 使用RAII思想设计的SmartPtr类
+template<class T>
+class SmartPtr {
+public:
+	SmartPtr(T* ptr = nullptr)
+		: _ptr(ptr)
+	{}
+	~SmartPtr()
+	{
+		if (_ptr)
+			delete _ptr;
+	}
+private:
+	T* _ptr;
+};
+int div()
+{
+	int a, b;
+	cin >> a >> b;
+	if (b == 0)
+		throw invalid_argument("除0错误");
+	return a / b;
+}
+void Func()
+{
+	SmartPtr<int> sp1(new int);
+	SmartPtr<int> sp2(new int);
+	cout << div() << endl;
+}
+int main()
+{
+	try {
+		Func();
+	}
+	catch (const exception& e)
+	{
+		cout << e.what() << endl;
+	}
+	return 0;
+}
+
+//int div()
+//{
+//	int a, b;
+//	cin >> a >> b;
+//	if (b == 0)
+//		throw invalid_argument("除0错误");
+//	return a / b;
+//}
+//void Func()
+//{
+//	 1、如果p1这里new 抛异常会如何？
+//	 2、如果p2这里new 抛异常会如何？
+//	 3、如果div调用这里又会抛异常会如何？
+//	int* p1 = new int;
+//	int* p2 = new int;
+//	cout << div() << endl;
+//	delete p1;
+//	delete p2;
+//}
+//int main()
+//{
+//	try
+//	{
+//		Func();
+//	}
+//	catch (exception& e)
+//	{
+//		cout << e.what() << endl;
+//	}
+//	return 0;
+//}
+//
+//void MemoryLeaks()
+//{
+//	 1.内存申请了忘记释放
+//	int* p1 = (int*)malloc(sizeof(int));
+//	int* p2 = new int;
+//	 2.异常安全问题
+//	int* p3 = new int[10];
+//	Func(); // 这里Func函数抛异常导致 delete[] p3未执行，p3没被释放.
+//	delete[] p3;
+//}
