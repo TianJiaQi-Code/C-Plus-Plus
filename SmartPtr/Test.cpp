@@ -3,6 +3,28 @@ using namespace std;
 
 #include "SmartPtr.h"
 
+int main()
+{
+	tjq::shared_ptr<int> sp1(new int);
+	tjq::shared_ptr<int> sp2(sp1);
+	tjq::shared_ptr<int> sp3(sp1);
+
+	tjq::shared_ptr<int> sp4(new int);
+	tjq::shared_ptr<int> sp5(sp4);
+
+	//sp1 = sp1;
+	//sp1 = sp2;
+
+	//sp1 = sp4;
+	//sp2 = sp4;
+	//sp3 = sp4;
+
+	*sp1 = 2;
+	*sp2 = 3;
+
+	return 0;
+}
+
 //int main()
 //{
 //	tjq::unique_ptr<int> sp1(new int);

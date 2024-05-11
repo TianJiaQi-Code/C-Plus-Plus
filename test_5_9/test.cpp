@@ -1,47 +1,87 @@
 #include <iostream>
 using namespace std;
 
-// 使用RAII思想设计的SmartPtr类
-template<class T>
-class SmartPtr {
-public:
-	SmartPtr(T* ptr = nullptr)
-		: _ptr(ptr)
-	{}
-	~SmartPtr()
-	{
-		if (_ptr)
-			delete _ptr;
-	}
-private:
-	T* _ptr;
+struct ListNode
+{
+	int _data;
+	weak_ptr<ListNode> _prev;
+	weak_ptr<ListNode> _next;
+	~ListNode() { cout << "~ListNode()" << endl; }
 };
-int div()
-{
-	int a, b;
-	cin >> a >> b;
-	if (b == 0)
-		throw invalid_argument("除0错误");
-	return a / b;
-}
-void Func()
-{
-	SmartPtr<int> sp1(new int);
-	SmartPtr<int> sp2(new int);
-	cout << div() << endl;
-}
 int main()
 {
-	try {
-		Func();
-	}
-	catch (const exception& e)
-	{
-		cout << e.what() << endl;
-	}
+	shared_ptr<ListNode> node1(new ListNode);
+	shared_ptr<ListNode> node2(new ListNode);
+	cout << node1.use_count() << endl;
+	cout << node2.use_count() << endl;
+	node1->_next = node2;
+	node2->_prev = node1;
+	cout << node1.use_count() << endl;
+	cout << node2.use_count() << endl;
 	return 0;
 }
 
+//struct ListNode
+//{
+//	int _data;
+//	shared_ptr<ListNode> _prev;
+//	shared_ptr<ListNode> _next;
+//	~ListNode() { cout << "~ListNode()" << endl; }
+//};
+//
+//int main()
+//{
+//	shared_ptr<ListNode> node1(new ListNode);
+//	shared_ptr<ListNode> node2(new ListNode);
+//	cout << node1.use_count() << endl;
+//	cout << node2.use_count() << endl;
+//	node1->_next = node2;
+//	node2->_prev = node1;
+//	cout << node1.use_count() << endl;
+//	cout << node2.use_count() << endl;
+//	return 0;
+//}
+
+// 使用RAII思想设计的SmartPtr类
+//template<class T>
+//class SmartPtr {
+//public:
+//	SmartPtr(T* ptr = nullptr)
+//		: _ptr(ptr)
+//	{}
+//	~SmartPtr()
+//	{
+//		if (_ptr)
+//			delete _ptr;
+//	}
+//private:
+//	T* _ptr;
+//};
+//int div()
+//{
+//	int a, b;
+//	cin >> a >> b;
+//	if (b == 0)
+//		throw invalid_argument("除0错误");
+//	return a / b;
+//}
+//void Func()
+//{
+//	SmartPtr<int> sp1(new int);
+//	SmartPtr<int> sp2(new int);
+//	cout << div() << endl;
+//}
+//int main()
+//{
+//	try {
+//		Func();
+//	}
+//	catch (const exception& e)
+//	{
+//		cout << e.what() << endl;
+//	}
+//	return 0;
+//}
 //int div()
 //{
 //	int a, b;
