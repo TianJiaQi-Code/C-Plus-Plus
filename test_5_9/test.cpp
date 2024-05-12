@@ -1,25 +1,54 @@
 #include <iostream>
 using namespace std;
 
-struct ListNode
-{
-	int _data;
-	weak_ptr<ListNode> _prev;
-	weak_ptr<ListNode> _next;
-	~ListNode() { cout << "~ListNode()" << endl; }
+// ·Âº¯ÊýµÄÉ¾³ýÆ÷
+template<class T>
+struct FreeFunc {
+	void operator()(T* ptr)
+	{
+		cout << "free:" << ptr << endl;
+		free(ptr);
+	}
+};
+template<class T>
+struct DeleteArrayFunc {
+	void operator()(T* ptr)
+	{
+		cout << "delete[]" << ptr << endl;
+		delete[] ptr;
+	}
 };
 int main()
 {
-	shared_ptr<ListNode> node1(new ListNode);
-	shared_ptr<ListNode> node2(new ListNode);
-	cout << node1.use_count() << endl;
-	cout << node2.use_count() << endl;
-	node1->_next = node2;
-	node2->_prev = node1;
-	cout << node1.use_count() << endl;
-	cout << node2.use_count() << endl;
+	FreeFunc<int> freeFunc;
+	std::shared_ptr<int> sp1((int*)malloc(4), freeFunc);
+	DeleteArrayFunc<int> deleteArrayFunc;
+	std::shared_ptr<int> sp2((int*)malloc(4), deleteArrayFunc);
+	std::shared_ptr<A> sp4(new A[10], [](A* p) {delete[] p; });
+	std::shared_ptr<FILE> sp5(fopen("test.txt", "w"), [](FILE* p)
+		{fclose(p); });
 	return 0;
 }
+
+//struct ListNode
+//{
+//	int _data;
+//	weak_ptr<ListNode> _prev;
+//	weak_ptr<ListNode> _next;
+//	~ListNode() { cout << "~ListNode()" << endl; }
+//};
+//int main()
+//{
+//	shared_ptr<ListNode> node1(new ListNode);
+//	shared_ptr<ListNode> node2(new ListNode);
+//	cout << node1.use_count() << endl;
+//	cout << node2.use_count() << endl;
+//	node1->_next = node2;
+//	node2->_prev = node1;
+//	cout << node1.use_count() << endl;
+//	cout << node2.use_count() << endl;
+//	return 0;
+//}
 
 //struct ListNode
 //{
