@@ -1,13 +1,149 @@
+#define _CRT_SECURE_NO_WARNINGS 1
+
 #include <stdio.h>
 #include <string.h>
+#include <assert.h>
 
-#define PRINT(FORMAT, VALUE) printf("the value of "#VALUE" is "FORMAT"\n", VALUE);
+void* my_memcpy(void* dst, const void* src, size_t num)
+{
+	void* ret = dst;
+	assert(dst);
+	assert(src);
+	while (num--)
+	{
+		*(char*)dst = *(char*)src;
+		dst = (char*)dst + 1;
+		src = (char*)src + 1;
+	}
+	return ret;
+}
+
+void* my_memmove(void* dst, const void* src, size_t num)
+{
+	void* ret = dst;
+	assert(dst);
+	assert(src);
+	if (dst <= src || (char*)dst >= (char*)src + num)
+	{
+		while (num--)
+		{
+			*(char*)dst = *(char*)src;
+			dst = (char*)dst + 1;
+			src = (char*)src + 1;
+		}
+	}
+	else
+	{
+		dst = (char*)dst + num - 1;
+		src = (char*)src + num - 1;
+		while (num--)
+		{
+			*(char*)dst = *(char*)src;
+			dst = (char*)dst - 1;
+			src = (char*)src - 1;
+		}
+	}
+	return ret;
+}
+
+char* my_strstr(const char* str1, const char* str2)
+{
+	char* cp = (char*)str1;
+	char* s1, * s2;
+	if (!*str2) return (char*)str1;
+	while (*cp)
+	{
+		s1 = cp;
+		s2 = (char*)str2;
+		while (*s1 && *s2 && !(*s1 - *s2))
+			s1++, s2++;
+		if (!*s2) return cp;
+		cp++;
+	}
+	return NULL;
+}
+
+char* he_strstr(const char* str1, const char* str2)
+{
+	char* cp = (char*)str1;
+	char* s1, * s2;
+	if (!*str2)
+		return((char*)str1);
+	while (*cp)
+	{
+		s1 = cp;
+		s2 = (char*)str2;
+		while (*s1 && *s2 && !(*s1 - *s2))
+			s1++, s2++;
+		if (!*s2)
+			return(cp);
+		cp++;
+	}
+	return(NULL);
+}
 
 int main()
 {
-	int i = 10;
-	PRINT("%d", i + 3);
+	char str[] = "This is a simple string";
+	char* pch;
+	pch = my_strstr(str, "simple");
+	if (pch != NULL)
+		strncpy(pch, "sample", 6);
+	puts(str);
+	return 0;
 }
+
+//int main()
+//{
+//	char str[] = "memmove can be very useful......";
+//	my_memmove(str + 20, str + 15, 11);
+//	puts(str);
+//	return 0;
+//}
+
+//struct {
+//	char name[40];
+//	int age;
+//} person, person_copy;
+//
+//int main()
+//{
+//	char myname[] = "Pierre de Fermat";
+//
+//	/* using memcpy to copy string: */
+//	my_memcpy(person.name, myname, strlen(myname) + 1);
+//	person.age = 46;
+//
+//	/* using memcpy to copy structure: */
+//	my_memcpy(&person_copy, &person, sizeof(person));
+//
+//	printf("person_copy: %s, %d \n", person_copy.name, person_copy.age);
+//
+//	return 0;
+//}
+
+//int main()
+//{
+//	extern int sum(int, int);
+//	extern int g_val;
+//	printf("%d\n", g_val);
+//	printf("%d\n", sum(10, 15));
+//	return 0;
+//}
+
+//#define PRINT(FORMAT, VALUE) printf("the value of "#VALUE" is "FORMAT"\n", VALUE);
+//#define ADD_TO_SUM(num, value) sum##num += value
+//
+//int main()
+//{
+//	//int i = 10;
+//	//PRINT("%d", i+3);
+//
+//	int sum5 = 1;
+//	// 作用: 给 sum5 增加 10
+//	ADD_TO_SUM(5, 10);
+//	printf("%d\n", sum5);
+//}
 
 //#define DEBUG_PRINT printf("file:%s\tline:%d\tdate:%s\ttime:%s\t",\
 //							__FILE__, __LINE__, __DATE__, __TIME__)
