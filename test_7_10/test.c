@@ -4,94 +4,96 @@
 #include <string.h>
 #include <assert.h>
 
-void* my_memcpy(void* dst, const void* src, size_t num)
-{
-	void* ret = dst;
-	assert(dst);
-	assert(src);
-	while (num--)
-	{
-		*(char*)dst = *(char*)src;
-		dst = (char*)dst + 1;
-		src = (char*)src + 1;
-	}
-	return ret;
-}
 
-void* my_memmove(void* dst, const void* src, size_t num)
-{
-	void* ret = dst;
-	assert(dst);
-	assert(src);
-	if (dst <= src || (char*)dst >= (char*)src + num)
-	{
-		while (num--)
-		{
-			*(char*)dst = *(char*)src;
-			dst = (char*)dst + 1;
-			src = (char*)src + 1;
-		}
-	}
-	else
-	{
-		dst = (char*)dst + num - 1;
-		src = (char*)src + num - 1;
-		while (num--)
-		{
-			*(char*)dst = *(char*)src;
-			dst = (char*)dst - 1;
-			src = (char*)src - 1;
-		}
-	}
-	return ret;
-}
 
-char* my_strstr(const char* str1, const char* str2)
-{
-	char* cp = (char*)str1;
-	char* s1, * s2;
-	if (!*str2) return (char*)str1;
-	while (*cp)
-	{
-		s1 = cp;
-		s2 = (char*)str2;
-		while (*s1 && *s2 && !(*s1 - *s2))
-			s1++, s2++;
-		if (!*s2) return cp;
-		cp++;
-	}
-	return NULL;
-}
-
-char* he_strstr(const char* str1, const char* str2)
-{
-	char* cp = (char*)str1;
-	char* s1, * s2;
-	if (!*str2)
-		return((char*)str1);
-	while (*cp)
-	{
-		s1 = cp;
-		s2 = (char*)str2;
-		while (*s1 && *s2 && !(*s1 - *s2))
-			s1++, s2++;
-		if (!*s2)
-			return(cp);
-		cp++;
-	}
-	return(NULL);
-}
-
-int main()
-{
-	char str[] = "This is a simple string";
-	char* pch;
-	pch = my_strstr(str, "simple");
-	if (pch != NULL)
-		strncpy(pch, "sample", 6);
-	puts(str);
-	return 0;
-}
+//void* my_memcpy(void* dst, const void* src, size_t num)
+//{
+//	void* ret = dst;
+//	assert(dst);
+//	assert(src);
+//	while (num--)
+//	{
+//		*(char*)dst = *(char*)src;
+//		dst = (char*)dst + 1;
+//		src = (char*)src + 1;
+//	}
+//	return ret;
+//}
+//
+//void* my_memmove(void* dst, const void* src, size_t num)
+//{
+//	void* ret = dst;
+//	assert(dst);
+//	assert(src);
+//	if (dst <= src || (char*)dst >= (char*)src + num)
+//	{
+//		while (num--)
+//		{
+//			*(char*)dst = *(char*)src;
+//			dst = (char*)dst + 1;
+//			src = (char*)src + 1;
+//		}
+//	}
+//	else
+//	{
+//		dst = (char*)dst + num - 1;
+//		src = (char*)src + num - 1;
+//		while (num--)
+//		{
+//			*(char*)dst = *(char*)src;
+//			dst = (char*)dst - 1;
+//			src = (char*)src - 1;
+//		}
+//	}
+//	return ret;
+//}
+//
+//char* my_strstr(const char* str1, const char* str2)
+//{
+//	char* cp = (char*)str1;
+//	char* s1, * s2;
+//	if (!*str2) return (char*)str1;
+//	while (*cp)
+//	{
+//		s1 = cp;
+//		s2 = (char*)str2;
+//		while (*s1 && *s2 && !(*s1 - *s2))
+//			s1++, s2++;
+//		if (!*s2) return cp;
+//		cp++;
+//	}
+//	return NULL;
+//}
+//
+//char* he_strstr(const char* str1, const char* str2)
+//{
+//	char* cp = (char*)str1;
+//	char* s1, * s2;
+//	if (!*str2)
+//		return((char*)str1);
+//	while (*cp)
+//	{
+//		s1 = cp;
+//		s2 = (char*)str2;
+//		while (*s1 && *s2 && !(*s1 - *s2))
+//			s1++, s2++;
+//		if (!*s2)
+//			return(cp);
+//		cp++;
+//	}
+//	return(NULL);
+//}
+//
+//int main()
+//{
+//	char str[] = "This is a simple string";
+//	char* pch;
+//	pch = my_strstr(str, "simple");
+//	if (pch != NULL)
+//		strncpy(pch, "sample", 6);
+//	puts(str);
+//	return 0;
+//}
 
 //int main()
 //{
